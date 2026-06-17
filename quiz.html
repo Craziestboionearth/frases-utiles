@@ -141,22 +141,26 @@
     </div>
   </main>
 
-  <script>
-    (() => {
-      // Theme Toggle Logic
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Theme Toggle Logic (Dark Mode)
       const root = document.documentElement;
       const toggle = document.querySelector('[data-theme-toggle]');
-      let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      root.setAttribute('data-theme', theme);
-      const updateToggle = () => { toggle.textContent = theme === 'dark' ? '☀' : '◐'; };
-      updateToggle();
-      toggle?.addEventListener('click', () => {
-        theme = theme === 'dark' ? 'light' : 'dark';
+      
+      if (toggle) {
+        let theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         root.setAttribute('data-theme', theme);
+        const updateToggle = () => { toggle.textContent = theme === 'dark' ? '☀' : '◐'; };
         updateToggle();
-      });
+        
+        toggle.addEventListener('click', () => {
+          theme = theme === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', theme);
+          updateToggle();
+        });
+      }
 
-      // Quiz Logic
+      // 2. Quiz Logic
       const questions = [
         { q: '¿Cómo te llamas?', correct: 'Wie heißt du?', options: ['Wie heißt du?', 'Wo wohnst du?', 'Wie alt bist du?'] },
         { q: 'Guten Nachmittag.', correct: 'Buenas tardes.', options: ['Buenos días.', 'Buenas tardes.', 'Buenas noches.'] },
@@ -171,6 +175,9 @@
       let currentIndex = 0;
       let score = 0;
       const container = document.getElementById('quizContainer');
+
+      // Falls die Box im HTML fehlt, stoppt das Skript hier sicher
+      if (!container) return; 
 
       function renderQuestion() {
         const item = questions[currentIndex];
@@ -192,7 +199,7 @@
         const nextBtn = document.getElementById('nextBtn');
         const feedbackText = document.getElementById('feedbackText');
 
-        // Buttons mischen
+        // Antworten zufällig mischen
         const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
 
         shuffledOptions.forEach(option => {
@@ -201,7 +208,7 @@
           btn.textContent = option;
           
           btn.addEventListener('click', () => {
-            // Alle Buttons deaktivieren
+            // Nach Klick alle Buttons sperren
             const allBtns = optionsContainer.querySelectorAll('.quiz-option');
             allBtns.forEach(b => b.disabled = true);
             nextBtn.disabled = false;
@@ -215,4 +222,44 @@
             } else {
               btn.classList.add('wrong');
               feedbackText.textContent = '¡Falso! Leider falsch.';
-              feedbackText.className = 'quiz-
+              feedbackText.className = 'quiz-feedback feedback-wrong';
+              // Richtige Antwort trotzdem grün markieren
+              allBtns.forEach(b => {
+                if(b.textContent === item.correct) b.classList.add('correct');
+              });
+            }
+          });
+          optionsContainer.appendChild(btn);
+        });
+
+        nextBtn.addEventListener('click', () => {
+          currentIndex++;
+          if (currentIndex < questions.length) {
+            renderQuestion();
+          } else {
+            showResults();
+          }
+        });
+      }
+
+      function showResults() {
+        let message = "";
+        if(score === questions.length) message = "¡Excelente! Perfekt!";
+        else if(score >= questions.length / 2) message = "¡Muy bien! Das sieht schon sehr gut aus.";
+        else message = "¡Sigue practicando! Übe noch ein bisschen weiter.";
+
+        container.innerHTML = `
+          <div class="result-view">
+            <h2>Quiz beendet!</h2>
+            <div class="score-circle">${score} / ${questions.length}</div>
+            <p style="margin-bottom: var(--space-6); color: var(--color-text-muted);">${message}</p>
+            <a href="index.html" class="btn-primary" style="display:inline-block; text-decoration:none;">Zurück zur Übersicht</a>
+            <button onclick="location.reload()" class="btn-primary" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border); margin-left: var(--space-2);">Nochmal spielen</button>
+          </div>
+        `;
+      }
+
+      // Quiz direkt beim Laden der Seite starten
+      renderQuestion();
+    });
+  </script>
