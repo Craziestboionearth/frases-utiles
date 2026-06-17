@@ -81,14 +81,18 @@
     .quiz-header{display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); border-bottom: 1px dashed var(--color-border); padding-bottom: var(--space-4);}
     .quiz-progress{font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 700;}
     .quiz-question-text{font-size: var(--text-xl); font-family: var(--font-display); line-height: 1.2; margin-bottom: var(--space-6);}
+    .tf-statement{background: var(--color-surface-2); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-6); font-size: var(--text-lg); border: 1px solid var(--color-border); text-align: center;}
+    
     .quiz-options{display:grid;gap:var(--space-3);}
-    .quiz-option{padding:var(--space-4);border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface-2);text-align:left;transition:all var(--transition); font-size: var(--text-base);}
+    .tf-options{grid-template-columns: 1fr 1fr;}
+    .quiz-option{padding:var(--space-4);border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface-2);text-align:left;transition:all var(--transition); font-size: var(--text-base); font-weight: 500;}
+    .tf-options .quiz-option{text-align: center; font-size: var(--text-lg);}
     .quiz-option:hover:not(:disabled){border-color:var(--color-primary);background:var(--color-surface); transform: translateY(-2px);}
     .quiz-option:disabled{cursor: not-allowed; opacity: 0.8;}
     .quiz-option.correct{background:rgba(76, 150, 92, 0.12);border-color:#4c965c;}
     .quiz-option.wrong{background:rgba(191, 82, 82, 0.12);border-color:#bf5252;}
     
-    .quiz-footer{margin-top:var(--space-8); display: flex; justify-content: space-between; align-items: center;}
+    .quiz-footer{margin-top:var(--space-8); display: flex; justify-content: space-between; align-items: center; min-height: 3rem;}
     .quiz-feedback{font-weight: 700; font-size: var(--text-lg);}
     .feedback-correct{color: #4c965c;}
     .feedback-wrong{color: #bf5252;}
@@ -96,6 +100,15 @@
     .btn-primary{padding:0.9rem 1.5rem;border-radius:var(--radius-full);background:var(--color-primary);color:var(--color-text-inverse);font-weight:700;box-shadow:var(--shadow-md);transition:all var(--transition);}
     .btn-primary:hover:not(:disabled){background:var(--color-primary-hover);transform:translateY(-2px)}
     .btn-primary:disabled{opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;}
+    
+    .setup-view{text-align: center; padding: var(--space-4) 0;}
+    .setup-grid{display: grid; gap: var(--space-4); margin-top: var(--space-6); max-width: 400px; margin-inline: auto;}
+    .mode-btn{padding: var(--space-5); border-radius: var(--radius-lg); border: 2px solid var(--color-border); background: var(--color-surface); font-size: var(--text-lg); font-weight: 700; transition: all var(--transition); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);}
+    .mode-btn small{font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 400;}
+    .mode-btn:hover{border-color: var(--color-primary); transform: translateY(-3px); box-shadow: var(--shadow-md);}
+    
+    .toggle-wrap{margin-top: var(--space-8); display: flex; align-items: center; justify-content: center; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); background: var(--color-surface-2); padding: var(--space-3); border-radius: var(--radius-full); width: fit-content; margin-inline: auto;}
+    .toggle-wrap input{width: 1.2rem; height: 1.2rem; accent-color: var(--color-primary); cursor: pointer;}
     
     .result-view{text-align: center; padding: var(--space-8) 0;}
     .score-circle{width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-6); color: white; font-size: var(--text-2xl); font-family: var(--font-display); box-shadow: var(--shadow-lg);}
@@ -125,9 +138,9 @@
   <main>
     <div class="container">
       <div class="hero-copy">
-        <span class="eyebrow">¡Buena suerte!</span>
+        <span class="eyebrow">¡A jugar!</span>
         <h1>Das große Unidad 1 Quiz</h1>
-        <p>Teste dein Wissen. Wähle die richtige deutsche oder spanische Übersetzung für die angezeigten Sätze.</p>
+        <p>Wähle einen Spielmodus und teste dein Wissen. Die Fragen werden in jeder Runde neu aus über 100 Vokabeln gemischt!</p>
       </div>
 
       <div class="quiz-card" id="quizContainer">
@@ -137,16 +150,14 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Dark Mode Toggle
+      // --- Dark Mode ---
       const root = document.documentElement;
       const toggle = document.querySelector('[data-theme-toggle]');
-      
       if (toggle) {
         let theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         root.setAttribute('data-theme', theme);
         const updateToggle = () => { toggle.textContent = theme === 'dark' ? '☀' : '◐'; };
         updateToggle();
-        
         toggle.addEventListener('click', () => {
           theme = theme === 'dark' ? 'light' : 'dark';
           root.setAttribute('data-theme', theme);
@@ -154,37 +165,256 @@
         });
       }
 
-      // 2. Quiz Logik
-      const questions = [
-        { q: '¿Cómo te llamas?', correct: 'Wie heißt du?', options: ['Wie heißt du?', 'Wo wohnst du?', 'Wie alt bist du?'] },
-        { q: 'Guten Nachmittag.', correct: 'Buenas tardes.', options: ['Buenos días.', 'Buenas tardes.', 'Buenas noches.'] },
-        { q: 'Soy de Alemania.', correct: 'Ich komme aus Deutschland.', options: ['Ich wohne in Deutschland.', 'Ich spreche Deutsch.', 'Ich komme aus Deutschland.'] },
-        { q: '¿Cuántos años tienes?', correct: 'Wie alt bist du?', options: ['Wie geht es dir?', 'Wie alt bist du?', 'Woher kommst du?'] },
-        { q: 'Freut mich sehr.', correct: 'Encantado / Encantada.', options: ['Igualmente.', 'Mucho gusto.', 'Encantado / Encantada.'] },
-        { q: 'Vivo en Berlín.', correct: 'Ich wohne in Berlin.', options: ['Ich komme aus Berlin.', 'Ich wohne in Berlin.', 'Ich bin in Berlin.'] },
-        { q: 'Bien, ¿y tú?', correct: 'Gut, und dir?', options: ['Gut, und dir?', 'Sehr gut, danke.', 'Wie geht\'s?'] },
-        { q: 'Welche Sprachen sprichst du?', correct: '¿Qué idiomas hablas?', options: ['¿De dónde eres?', '¿Qué tal?', '¿Qué idiomas hablas?'] }
+      // --- Vokabel-Datenbank aus dem Schulbuch (Unidad 1) ---
+      const vocabDB = [
+        { es: "el español", de: "Spanisch (Sprache)" },
+        { es: "¡Hola!", de: "Hallo!" },
+        { es: "me llamo", de: "ich heiße" },
+        { es: "soy de", de: "ich komme aus" },
+        { es: "soy", de: "ich bin" },
+        { es: "de", de: "aus, von" },
+        { es: "hablo", de: "ich spreche" },
+        { es: "y", de: "und" },
+        { es: "un poco (de)", de: "ein bisschen" },
+        { es: "el inglés", de: "Englisch (Sprache)" },
+        { es: "yo", de: "ich" },
+        { es: "también", de: "auch" },
+        { es: "el alemán", de: "Deutsch (Sprache)" },
+        { es: "¿Qué tal?", de: "Wie geht's?" },
+        { es: "el francés", de: "Französisch (Sprache)" },
+        { es: "la capital", de: "die Hauptstadt" },
+        { es: "tú", de: "du" },
+        { es: "¿Cómo te llamas?", de: "Wie heißt du?" },
+        { es: "¿cómo?", de: "wie?" },
+        { es: "¿De dónde eres?", de: "Woher kommst du?" },
+        { es: "¿de dónde?", de: "woher?" },
+        { es: "eres", de: "du bist" },
+        { es: "¿Qué lenguas hablas?", de: "Welche Sprachen sprichst du?" },
+        { es: "¿qué?", de: "was?, welche?" },
+        { es: "la lengua", de: "die Sprache" },
+        { es: "hablas", de: "du sprichst" },
+        { es: "el ejemplo", de: "das Beispiel" },
+        { es: "¡Vamos!", de: "Los geht's!" },
+        { es: "muy bien", de: "sehr gut" },
+        { es: "bien", de: "gut" },
+        { es: "¿Cómo estás?", de: "Wie geht's dir?" },
+        { es: "fenomenal", de: "großartig" },
+        { es: "gracias", de: "danke" },
+        { es: "él / ella", de: "er / sie" },
+        { es: "¿quién?", de: "wer?" },
+        { es: "es", de: "er / sie ist" },
+        { es: "¡Mira!", de: "Sieh mal!" },
+        { es: "un, una", de: "ein, eine" },
+        { es: "el amigo, la amiga", de: "der Freund, die Freundin" },
+        { es: "encantado, encantada", de: "sehr erfreut" },
+        { es: "mucho gusto", de: "angenehm (Begrüßung)" },
+        { es: "¡Hasta luego!", de: "Bis später!" },
+        { es: "¡Adiós!", de: "Auf Wiedersehen!" },
+        { es: "¡Buenos días!", de: "Guten Tag! / Guten Morgen!" },
+        { es: "¡Buenas tardes!", de: "Guten Tag! / Guten Abend!" },
+        { es: "¡Buenas noches!", de: "Guten Abend! / Gute Nacht!" },
+        { es: "más o menos", de: "mehr oder weniger, geht so" },
+        { es: "mal", de: "schlecht" },
+        { es: "fatal", de: "mies, furchtbar" },
+        { es: "el compañero de clase", de: "der Mitschüler" },
+        { es: "la clase", de: "die Klasse, der Unterricht" },
+        { es: "el trabajo", de: "die Arbeit" },
+        { es: "estudiar", de: "lernen, studieren" },
+        { es: "o", de: "oder" },
+        { es: "trabajar", de: "arbeiten" },
+        { es: "charlar", de: "quatschen, sich unterhalten" },
+        { es: "en", de: "in, an, auf" },
+        { es: "la plaza", de: "der Platz" },
+        { es: "no", de: "nein, nicht" },
+        { es: "aquí", de: "hier" },
+        { es: "pero", de: "aber" },
+        { es: "ahora", de: "jetzt" },
+        { es: "mi, mis", de: "mein, meine" },
+        { es: "la madre", de: "die Mutter" },
+        { es: "ser", de: "sein" },
+        { es: "¿verdad?", de: "stimmt's?, nicht wahr?" },
+        { es: "sí", de: "ja" },
+        { es: "el instituto", de: "die weiterführende Schule" },
+        { es: "todavía no", de: "noch nicht" },
+        { es: "todavía", de: "noch (immer)" },
+        { es: "¡Oye!", de: "Hör mal!" },
+        { es: "hablar", de: "sprechen" },
+        { es: "preparar algo", de: "etw. vorbereiten" },
+        { es: "el examen", de: "die Prüfung, der Test" },
+        { es: "significar algo", de: "etw. bedeuten" },
+        { es: "la biblioteca", de: "die Bibliothek" },
+        { es: "la pregunta", de: "die Frage" },
+        { es: "¿cuándo?", de: "wann?" },
+        { es: "mañana", de: "morgen" },
+        { es: "comprender algo", de: "etw. verstehen" },
+        { es: "el texto", de: "der Text" },
+        { es: "leer algo", de: "etw. lesen" },
+        { es: "mucho", de: "viel, sehr" },
+        { es: "así", de: "so" },
+        { es: "pues", de: "naja, also" },
+        { es: "claro", de: "(na) klar, natürlich" },
+        { es: "el padre", de: "der Vater" },
+        { es: "por eso", de: "deshalb" },
+        { es: "en casa", de: "zu Hause" },
+        { es: "la casa", de: "das Haus" },
+        { es: "genial", de: "genial" },
+        { es: "difícil", de: "schwierig" },
+        { es: "quedar", de: "sich verabreden, sich treffen" },
+        { es: "practicar algo", de: "etw. üben" },
+        { es: "vale", de: "okay, in Ordnung" },
+        { es: "la universidad", de: "die Universität" },
+        { es: "el hotel", de: "das Hotel" },
+        { es: "el restaurante", de: "das Restaurant" },
+        { es: "el supermercado", de: "der Supermarkt" },
+        { es: "la discoteca", de: "die Diskothek" },
+        { es: "tu, tus", de: "dein, deine" },
+        { es: "aprender algo", de: "etw. lernen" },
+        { es: "¿por qué?", de: "warum?" },
+        { es: "juntos, juntas", de: "zusammen" },
+        { es: "recibir algo", de: "etw. bekommen, erhalten" },
+        { es: "el mensaje", de: "die Nachricht" },
+        { es: "¡Buena idea!", de: "Gute Idee!" },
+        { es: "entonces", de: "dann, also" },
+        { es: "escribir algo", de: "etw. schreiben" },
+        { es: "el móvil", de: "das Handy" },
+        { es: "el momento", de: "der Moment" },
+        { es: "solo", de: "nur" },
+        { es: "vivir", de: "leben, wohnen" },
+        { es: "cerca", de: "nah, in der Nähe" },
+        { es: "primero", de: "zuerst" },
+        { es: "después", de: "danach, später" },
+        { es: "de acuerdo", de: "einverstanden" },
+        { es: "el vocabulario", de: "der Wortschatz" },
+        { es: "la película", de: "der Film" },
+        { es: "el regalo", de: "das Geschenk" },
+        { es: "bailar", de: "tanzen" },
+        { es: "comer algo", de: "etw. essen" },
+        { es: "descansar", de: "sich entspannen, ausruhen" },
+        { es: "comprar algo", de: "etw. kaufen" },
+        { es: "tomar algo", de: "etw. nehmen, trinken" },
+        { es: "el diálogo", de: "der Dialog" },
+        { es: "¿cuál?, ¿cuáles?", de: "welche?, welcher?, welches?" },
+        { es: "el número de teléfono", de: "die Telefonnummer" },
+        { es: "subir algo", de: "etw. hochgehen, hochladen" },
+        { es: "la escalera", de: "die Treppe" },
+        { es: "el vecino, la vecina", de: "der Nachbar, die Nachbarin" },
+        { es: "nuevo, nueva", de: "neu" },
+        { es: "en serio", de: "wirklich, im Ernst" },
+        { es: "necesitar algo", de: "etw. brauchen" },
+        { es: "la ayuda", de: "die Hilfe" },
+        { es: "con", de: "mit" },
+        { es: "el ordenador", de: "der Computer" },
+        { es: "funcionar", de: "funktionieren" },
+        { es: "¿Cómo se escribe...?", de: "Wie schreibt man ...?" },
+        { es: "perfecto", de: "perfekt" },
+        { es: "¡Hasta mañana!", de: "Bis morgen!" },
+        { es: "nosotros, nosotras", de: "wir" },
+        { es: "algo", de: "etwas" },
+        { es: "la puerta", de: "die Tür" },
+        { es: "el nombre", de: "der Vorname" }
       ];
 
+      // --- State Variablen ---
+      let currentMode = '';
+      let activeQuestions = [];
       let currentIndex = 0;
       let score = 0;
+      let autoAdvanceEnabled = true;
+      let advanceTimer = null;
+      const questionsPerRound = 10;
       const container = document.getElementById('quizContainer');
 
-      if (!container) return; // Bricht ab, falls der Container fehlt
+      if (!container) return;
 
-      function renderQuestion() {
-        const item = questions[currentIndex];
+      // --- View 1: Setup / Startbildschirm ---
+      function renderSetup() {
+        container.innerHTML = `
+          <div class="setup-view">
+            <h2>Wähle deinen Spielmodus</h2>
+            <div class="setup-grid">
+              <button class="mode-btn" onclick="startQuiz('classic')">
+                <span>Klassisch</span>
+                <small>Wähle die richtige Übersetzung (Multiple Choice)</small>
+              </button>
+              <button class="mode-btn" onclick="startQuiz('tf')">
+                <span>Verdadero o Falso</span>
+                <small>Passen Satz und Übersetzung zusammen?</small>
+              </button>
+            </div>
+            <label class="toggle-wrap">
+              <input type="checkbox" id="autoAdvanceToggle" checked>
+              Nach Antwort automatisch weiter
+            </label>
+          </div>
+        `;
+      }
+
+      // --- Quiz Generator & Start ---
+      window.startQuiz = function(mode) {
+        currentMode = mode;
+        autoAdvanceEnabled = document.getElementById('autoAdvanceToggle').checked;
+        currentIndex = 0;
+        score = 0;
         
+        // Zufällige Vokabeln für diese Runde ziehen
+        const shuffledVocab = [...vocabDB].sort(() => 0.5 - Math.random());
+        const roundVocab = shuffledVocab.slice(0, questionsPerRound);
+        
+        activeQuestions = roundVocab.map(item => {
+          if (mode === 'classic') {
+            // Falsche Antworten aus dem Rest der DB suchen
+            const wrongOptions = vocabDB.filter(v => v.de !== item.de).sort(() => 0.5 - Math.random()).slice(0, 2);
+            const options = [item.de, wrongOptions[0].de, wrongOptions[1].de].sort(() => 0.5 - Math.random());
+            return {
+              q: item.es,
+              correct: item.de,
+              options: options,
+              type: 'classic'
+            };
+          } else {
+            // True/False Modus (50% Chance, dass es stimmt)
+            const isTrue = Math.random() > 0.5;
+            let displayDe = item.de;
+            if (!isTrue) {
+               const wrongVocab = vocabDB.filter(v => v.de !== item.de).sort(() => 0.5 - Math.random())[0];
+               displayDe = wrongVocab.de;
+            }
+            return {
+              q: item.es,
+              statementDe: displayDe,
+              correct: isTrue ? 'Verdadero (Wahr)' : 'Falso (Falsch)',
+              options: ['Verdadero (Wahr)', 'Falso (Falsch)'],
+              type: 'tf'
+            };
+          }
+        });
+
+        renderQuestion();
+      };
+
+      // --- View 2: Die aktive Frage ---
+      function renderQuestion() {
+        clearTimeout(advanceTimer); // Verhindert doppeltes Skippen
+        const item = activeQuestions[currentIndex];
+        
+        let questionHTML = `<div class="quiz-question-text">${item.q}</div>`;
+        let gridClass = "quiz-options";
+
+        if (item.type === 'tf') {
+          questionHTML += `<div class="tf-statement">Bedeutet: <strong>„${item.statementDe}“</strong></div>`;
+          gridClass = "quiz-options tf-options";
+        }
+
         container.innerHTML = `
           <div class="quiz-header">
-            <span class="eyebrow" style="margin:0; background: var(--color-surface-3); color: var(--color-text)">Frage ${currentIndex + 1} von ${questions.length}</span>
+            <span class="eyebrow" style="margin:0; background: var(--color-surface-3); color: var(--color-text)">Frage ${currentIndex + 1} von ${activeQuestions.length}</span>
             <span class="quiz-progress">Punkte: ${score}</span>
           </div>
-          <div class="quiz-question-text">${item.q}</div>
-          <div class="quiz-options" id="optionsContainer"></div>
+          ${questionHTML}
+          <div class="${gridClass}" id="optionsContainer"></div>
           <div class="quiz-footer">
             <div id="feedbackText" class="quiz-feedback"></div>
-            <button id="nextBtn" class="btn-primary" disabled>Nächste Frage</button>
+            <button id="nextBtn" class="btn-primary" style="display:none;">Nächste Frage</button>
           </div>
         `;
 
@@ -192,10 +422,7 @@
         const nextBtn = document.getElementById('nextBtn');
         const feedbackText = document.getElementById('feedbackText');
 
-        // Antworten mischen
-        const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
-
-        shuffledOptions.forEach(option => {
+        item.options.forEach(option => {
           const btn = document.createElement('button');
           btn.className = 'quiz-option';
           btn.textContent = option;
@@ -203,54 +430,68 @@
           btn.addEventListener('click', () => {
             const allBtns = optionsContainer.querySelectorAll('.quiz-option');
             allBtns.forEach(b => b.disabled = true);
-            nextBtn.disabled = false;
+            nextBtn.style.display = 'block';
 
             if (option === item.correct) {
               btn.classList.add('correct');
-              feedbackText.textContent = '¡Correcto! Richtig.';
+              feedbackText.textContent = '¡Correcto!';
               feedbackText.className = 'quiz-feedback feedback-correct';
               score++;
               document.querySelector('.quiz-progress').textContent = `Punkte: ${score}`;
             } else {
               btn.classList.add('wrong');
-              feedbackText.textContent = '¡Falso! Leider falsch.';
+              feedbackText.textContent = '¡Falso!';
               feedbackText.className = 'quiz-feedback feedback-wrong';
               allBtns.forEach(b => {
                 if(b.textContent === item.correct) b.classList.add('correct');
               });
+            }
+
+            if (autoAdvanceEnabled) {
+              advanceTimer = setTimeout(() => {
+                goToNext();
+              }, 1600);
             }
           });
           optionsContainer.appendChild(btn);
         });
 
         nextBtn.addEventListener('click', () => {
-          currentIndex++;
-          if (currentIndex < questions.length) {
-            renderQuestion();
-          } else {
-            showResults();
-          }
+          clearTimeout(advanceTimer);
+          goToNext();
         });
       }
 
+      function goToNext() {
+        currentIndex++;
+        if (currentIndex < activeQuestions.length) {
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      // --- View 3: Ergebnis ---
       function showResults() {
         let message = "";
-        if(score === questions.length) message = "¡Excelente! Perfekt!";
-        else if(score >= questions.length / 2) message = "¡Muy bien! Das sieht schon sehr gut aus.";
-        else message = "¡Sigue practicando! Übe noch ein bisschen weiter.";
+        if(score === activeQuestions.length) message = "¡Excelente! Perfekt, alles richtig!";
+        else if(score >= activeQuestions.length * 0.7) message = "¡Muy bien! Das sieht schon sehr gut aus.";
+        else message = "¡Sigue practicando! Übung macht den Meister.";
 
         container.innerHTML = `
           <div class="result-view">
-            <h2>Quiz beendet!</h2>
-            <div class="score-circle">${score} / ${questions.length}</div>
+            <h2>Runde beendet!</h2>
+            <div class="score-circle">${score} / ${activeQuestions.length}</div>
             <p style="margin-bottom: var(--space-6); color: var(--color-text-muted);">${message}</p>
-            <a href="index.html" class="btn-primary" style="display:inline-block; text-decoration:none;">Zurück zur Übersicht</a>
-            <button onclick="location.reload()" class="btn-primary" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border); margin-left: var(--space-2);">Nochmal spielen</button>
+            <div style="display:flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
+              <button onclick="startQuiz(currentMode)" class="btn-primary">Nochmal spielen</button>
+              <button onclick="renderSetup()" class="btn-primary" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);">Modus wechseln</button>
+            </div>
           </div>
         `;
       }
 
-      renderQuestion();
+      renderSetup();
     });
   </script>
 </body>
