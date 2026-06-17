@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gran Quiz – A_tope.com Unidad 1</title>
+  <meta name="description" content="Teste dein Wissen: Spanische Redemittel Unidad 1." />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=boska@400,500,700&display=swap" rel="stylesheet">
+  <style>
+    /* Exakt dasselbe CSS wie in deiner Hauptseite */
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+      --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+      --space-12: 3rem; --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+      --color-bg: #f7f3ee;
+      --color-surface: #fffdfa;
+      --color-surface-2: #f6efe7;
+      --color-surface-3: #efe4d8;
+      --color-border: rgba(40, 37, 29, 0.12);
+      --color-text: #2b241d;
+      --color-text-muted: #6f675d;
+      --color-text-faint: #9e968d;
+      --color-primary: #0b6c74;
+      --color-primary-hover: #0a565d;
+      --color-accent: #c66a2b;
+      --color-accent-soft: rgba(198, 106, 43, 0.12);
+      --color-primary-soft: rgba(11, 108, 116, 0.12);
+      --color-text-inverse: #fffdf9;
+      --shadow-sm: 0 1px 2px rgba(30, 24, 18, 0.05);
+      --shadow-md: 0 10px 30px rgba(30, 24, 18, 0.08);
+      --shadow-lg: 0 22px 55px rgba(30, 24, 18, 0.14);
+      --radius-md: 0.85rem; --radius-lg: 1.25rem; --radius-xl: 1.75rem; --radius-full: 9999px;
+      --font-display: 'Boska', Georgia, serif;
+      --font-body: 'Satoshi', Inter, sans-serif;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --content: 1200px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #171411;
+      --color-surface: #201c18;
+      --color-surface-2: #27211d;
+      --color-surface-3: #302823;
+      --color-border: rgba(255, 247, 238, 0.1);
+      --color-text: #f2ece4;
+      --color-text-muted: #c8beb2;
+      --color-text-faint: #8d8378;
+      --color-primary: #68b8bf;
+      --color-primary-hover: #8ccfd4;
+      --color-accent: #f0a261;
+      --color-accent-soft: rgba(240, 162, 97, 0.12);
+      --color-primary-soft: rgba(104, 184, 191, 0.12);
+      --color-text-inverse: #1a1612;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.26);
+      --shadow-lg: 0 18px 45px rgba(0,0,0,0.35);
+    }
+    *,:before,:after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.7;background:var(--color-bg);color:var(--color-text);background-image:radial-gradient(circle at top left, var(--color-accent-soft), transparent 28%), radial-gradient(circle at 90% 20%, var(--color-primary-soft), transparent 22%)}
+    a{text-decoration:none;color:inherit} button{font:inherit;border:none;background:none;cursor:pointer}
+    .container{width:min(calc(100% - 2rem), var(--content));margin-inline:auto; max-width: 800px;} /* Max-width für Quiz zentriert */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb, var(--color-bg) 82%, transparent);border-bottom:1px solid var(--color-border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) 0;gap:var(--space-4)}
+    .brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700}
+    .brand-mark{width:2.25rem;height:2.25rem;border-radius:0.8rem;background:linear-gradient(135deg,var(--color-primary),var(--color-accent));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow-sm)}
+    .brand svg{width:1.25rem;height:1.25rem;display:block}
+    .nav-links{display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center}
+    .nav-links a,.theme-toggle{padding:0.7rem 0.95rem;border-radius:var(--radius-full);font-size:var(--text-sm);color:var(--color-text-muted);transition:all var(--transition)}
+    .nav-links a:hover,.theme-toggle:hover{background:var(--color-surface);color:var(--color-text);box-shadow:var(--shadow-sm)}
+    main{padding:var(--space-8) 0 var(--space-24)}
+    .hero-copy{padding-block:var(--space-8); text-align: center;}
+    .eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);padding:0.45rem 0.8rem;border-radius:var(--radius-full);background:var(--color-primary-soft);color:var(--color-primary);font-size:var(--text-sm);font-weight:700;margin-bottom:var(--space-4)}
+    h1{font-family:var(--font-display);line-height:1.05;letter-spacing:-0.02em; font-size:var(--text-2xl); margin-inline: auto;}
+    .hero-copy p{margin-top:var(--space-4); max-width:56ch; margin-inline:auto; color:var(--color-text-muted)}
+    
+    /* Quiz Specific Styles */
+    .quiz-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-lg); margin-top: var(--space-6);}
+    .quiz-header{display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); border-bottom: 1px dashed var(--color-border); padding-bottom: var(--space-4);}
+    .quiz-progress{font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 700;}
+    .quiz-question-text{font-size: var(--text-xl); font-family: var(--font-display); line-height: 1.2; margin-bottom: var(--space-6);}
+    .quiz-options{display:grid;gap:var(--space-3);}
+    .quiz-option{padding:var(--space-4);border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface-2);text-align:left;transition:all var(--transition); font-size: var(--text-base);}
+    .quiz-option:hover:not(:disabled){border-color:var(--color-primary);background:var(--color-surface); transform: translateY(-2px);}
+    .quiz-option:disabled{cursor: not-allowed; opacity: 0.8;}
+    .quiz-option.correct{background:rgba(76, 150, 92, 0.12);border-color:#4c965c;}
+    .quiz-option.wrong{background:rgba(191, 82, 82, 0.12);border-color:#bf5252;}
+    
+    .quiz-footer{margin-top:var(--space-8); display: flex; justify-content: space-between; align-items: center;}
+    .quiz-feedback{font-weight: 700; font-size: var(--text-lg);}
+    .feedback-correct{color: #4c965c;}
+    .feedback-wrong{color: #bf5252;}
+    
+    .btn-primary{padding:0.9rem 1.5rem;border-radius:var(--radius-full);background:var(--color-primary);color:var(--color-text-inverse);font-weight:700;box-shadow:var(--shadow-md);transition:all var(--transition);}
+    .btn-primary:hover:not(:disabled){background:var(--color-primary-hover);transform:translateY(-2px)}
+    .btn-primary:disabled{opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;}
+    
+    .result-view{text-align: center; padding: var(--space-8) 0;}
+    .score-circle{width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-6); color: white; font-size: var(--text-2xl); font-family: var(--font-display); box-shadow: var(--shadow-lg);}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" style="max-width: 1200px;">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 7.5h12M6 12h8M6 16.5h10"/><path d="M18.5 5.5 21 8l-2.5 2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div>Frases útiles</div>
+          <div style="font-size:var(--text-sm);color:var(--color-text-faint)">A_tope.com · Unidad 1</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">← Zurück zur Übersicht</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Farbschema wechseln">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="hero-copy">
+        <span class="eyebrow">¡Buena suerte!</span>
+        <h1>Das große Unidad 1 Quiz</h1>
+        <p>Teste dein Wissen. Wähle die richtige deutsche oder spanische Übersetzung für die angezeigten Sätze.</p>
+      </div>
+
+      <div class="quiz-card" id="quizContainer">
+        </div>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      // Theme Toggle Logic
+      const root = document.documentElement;
+      const toggle = document.querySelector('[data-theme-toggle]');
+      let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', theme);
+      const updateToggle = () => { toggle.textContent = theme === 'dark' ? '☀' : '◐'; };
+      updateToggle();
+      toggle?.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+        updateToggle();
+      });
+
+      // Quiz Logic
+      const questions = [
+        { q: '¿Cómo te llamas?', correct: 'Wie heißt du?', options: ['Wie heißt du?', 'Wo wohnst du?', 'Wie alt bist du?'] },
+        { q: 'Guten Nachmittag.', correct: 'Buenas tardes.', options: ['Buenos días.', 'Buenas tardes.', 'Buenas noches.'] },
+        { q: 'Soy de Alemania.', correct: 'Ich komme aus Deutschland.', options: ['Ich wohne in Deutschland.', 'Ich spreche Deutsch.', 'Ich komme aus Deutschland.'] },
+        { q: '¿Cuántos años tienes?', correct: 'Wie alt bist du?', options: ['Wie geht es dir?', 'Wie alt bist du?', 'Woher kommst du?'] },
+        { q: 'Freut mich sehr.', correct: 'Encantado / Encantada.', options: ['Igualmente.', 'Mucho gusto.', 'Encantado / Encantada.'] },
+        { q: 'Vivo en Berlín.', correct: 'Ich wohne in Berlin.', options: ['Ich komme aus Berlin.', 'Ich wohne in Berlin.', 'Ich bin in Berlin.'] },
+        { q: 'Bien, ¿y tú?', correct: 'Gut, und dir?', options: ['Gut, und dir?', 'Sehr gut, danke.', 'Wie geht\'s?'] },
+        { q: 'Welche Sprachen sprichst du?', correct: '¿Qué idiomas hablas?', options: ['¿De dónde eres?', '¿Qué tal?', '¿Qué idiomas hablas?'] }
+      ];
+
+      let currentIndex = 0;
+      let score = 0;
+      const container = document.getElementById('quizContainer');
+
+      function renderQuestion() {
+        const item = questions[currentIndex];
+        
+        container.innerHTML = `
+          <div class="quiz-header">
+            <span class="eyebrow" style="margin:0; background: var(--color-surface-3); color: var(--color-text)">Frage ${currentIndex + 1} von ${questions.length}</span>
+            <span class="quiz-progress">Punkte: ${score}</span>
+          </div>
+          <div class="quiz-question-text">${item.q}</div>
+          <div class="quiz-options" id="optionsContainer"></div>
+          <div class="quiz-footer">
+            <div id="feedbackText" class="quiz-feedback"></div>
+            <button id="nextBtn" class="btn-primary" disabled>Nächste Frage</button>
+          </div>
+        `;
+
+        const optionsContainer = document.getElementById('optionsContainer');
+        const nextBtn = document.getElementById('nextBtn');
+        const feedbackText = document.getElementById('feedbackText');
+
+        // Buttons mischen
+        const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+
+        shuffledOptions.forEach(option => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-option';
+          btn.textContent = option;
+          
+          btn.addEventListener('click', () => {
+            // Alle Buttons deaktivieren
+            const allBtns = optionsContainer.querySelectorAll('.quiz-option');
+            allBtns.forEach(b => b.disabled = true);
+            nextBtn.disabled = false;
+
+            if (option === item.correct) {
+              btn.classList.add('correct');
+              feedbackText.textContent = '¡Correcto! Richtig.';
+              feedbackText.className = 'quiz-feedback feedback-correct';
+              score++;
+              document.querySelector('.quiz-progress').textContent = `Punkte: ${score}`;
+            } else {
+              btn.classList.add('wrong');
+              feedbackText.textContent = '¡Falso! Leider falsch.';
+              feedbackText.className = 'quiz-
