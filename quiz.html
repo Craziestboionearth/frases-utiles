@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gran Quiz – A_tope.com Unidad 1</title>
+  <title>Frases útiles – A_tope.com Unidad 1</title>
+  <meta name="description" content="Nützliche spanische Redemittel para A_tope.com Unidad 1." />
   <link rel="preconnect" href="https://api.fontshare.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,70 +58,95 @@
       --color-accent-soft: rgba(240, 162, 97, 0.12);
       --color-primary-soft: rgba(104, 184, 191, 0.12);
       --color-text-inverse: #1a1612;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.26);
+      --shadow-lg: 0 18px 45px rgba(0,0,0,0.35);
     }
     *,:before,:after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
     body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.7;background:var(--color-bg);color:var(--color-text);background-image:radial-gradient(circle at top left, var(--color-accent-soft), transparent 28%), radial-gradient(circle at 90% 20%, var(--color-primary-soft), transparent 22%)}
     a{text-decoration:none;color:inherit} button{font:inherit;border:none;background:none;cursor:pointer}
-    .container{width:min(calc(100% - 2rem), var(--content));margin-inline:auto; max-width: 800px;}
+    .skip-link{position:absolute;left:-9999px;top:auto}.skip-link:focus{left:var(--space-4);top:var(--space-4);background:var(--color-primary);color:var(--color-text-inverse);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);z-index:1000}
+    .container{width:min(calc(100% - 2rem), var(--content));margin-inline:auto}
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb, var(--color-bg) 82%, transparent);border-bottom:1px solid var(--color-border)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) 0;gap:var(--space-4)}
     .brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700}
     .brand-mark{width:2.25rem;height:2.25rem;border-radius:0.8rem;background:linear-gradient(135deg,var(--color-primary),var(--color-accent));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow-sm)}
     .brand svg{width:1.25rem;height:1.25rem;display:block}
-    .nav-links{display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center}
+    .nav-links{display:flex;gap:var(--space-2);flex-wrap:wrap}
     .nav-links a,.theme-toggle{padding:0.7rem 0.95rem;border-radius:var(--radius-full);font-size:var(--text-sm);color:var(--color-text-muted);transition:all var(--transition)}
-    .nav-links a:hover,.theme-toggle:hover{background:var(--color-surface);color:var(--color-text);box-shadow:var(--shadow-sm)}
+    .nav-links a:hover,.nav-links a:focus-visible,.theme-toggle:hover,.theme-toggle:focus-visible{background:var(--color-surface);color:var(--color-text);box-shadow:var(--shadow-sm)}
     main{padding:var(--space-8) 0 var(--space-24)}
-    .hero-copy{padding-block:var(--space-8); text-align: center;}
+    .hero{display:grid;grid-template-columns:1.1fr 0.9fr;gap:var(--space-10);align-items:stretch;padding:var(--space-16) 0 var(--space-12)}
+    .hero-copy{padding-block:var(--space-4)}
     .eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);padding:0.45rem 0.8rem;border-radius:var(--radius-full);background:var(--color-primary-soft);color:var(--color-primary);font-size:var(--text-sm);font-weight:700;margin-bottom:var(--space-4)}
-    h1{font-family:var(--font-display);line-height:1.05;letter-spacing:-0.02em; font-size:var(--text-2xl); margin-inline: auto;}
-    .hero-copy p{margin-top:var(--space-4); max-width:56ch; margin-inline:auto; color:var(--color-text-muted)}
-    
-    .quiz-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-lg); margin-top: var(--space-6);}
-    .quiz-header{display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); border-bottom: 1px dashed var(--color-border); padding-bottom: var(--space-4);}
-    .quiz-progress{font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 700;}
-    .quiz-question-text{font-size: var(--text-xl); font-family: var(--font-display); line-height: 1.2; margin-bottom: var(--space-6);}
-    .tf-statement{background: var(--color-surface-2); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-6); font-size: var(--text-lg); border: 1px solid var(--color-border); text-align: center;}
-    
-    .quiz-options{display:grid;gap:var(--space-3);}
-    .tf-options{grid-template-columns: 1fr 1fr;}
-    .quiz-option{padding:var(--space-4);border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface-2);text-align:left;transition:all var(--transition); font-size: var(--text-base); font-weight: 500;}
-    .tf-options .quiz-option{text-align: center; font-size: var(--text-lg);}
-    .quiz-option:hover:not(:disabled){border-color:var(--color-primary);background:var(--color-surface); transform: translateY(-2px);}
-    .quiz-option:disabled{cursor: not-allowed; opacity: 0.8;}
-    .quiz-option.correct{background:rgba(76, 150, 92, 0.12);border-color:#4c965c;}
-    .quiz-option.wrong{background:rgba(191, 82, 82, 0.12);border-color:#bf5252;}
-    
-    .quiz-footer{margin-top:var(--space-8); display: flex; justify-content: space-between; align-items: center; min-height: 3rem;}
-    .quiz-feedback{font-weight: 700; font-size: var(--text-lg);}
-    .feedback-correct{color: #4c965c;}
-    .feedback-wrong{color: #bf5252;}
-    
-    .btn-primary{padding:0.9rem 1.5rem;border-radius:var(--radius-full);background:var(--color-primary);color:var(--color-text-inverse);font-weight:700;box-shadow:var(--shadow-md);transition:all var(--transition);}
-    .btn-primary:hover:not(:disabled){background:var(--color-primary-hover);transform:translateY(-2px)}
-    .btn-primary:disabled{opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;}
-    
-    .setup-view{text-align: center; padding: var(--space-4) 0;}
-    .setup-grid{display: grid; gap: var(--space-4); margin-top: var(--space-6); max-width: 400px; margin-inline: auto;}
-    .mode-btn{padding: var(--space-5); border-radius: var(--radius-lg); border: 2px solid var(--color-border); background: var(--color-surface); font-size: var(--text-lg); font-weight: 700; transition: all var(--transition); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);}
-    .mode-btn small{font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 400;}
-    .mode-btn:hover{border-color: var(--color-primary); transform: translateY(-3px); box-shadow: var(--shadow-md);}
-    
-    .toggle-wrap{margin-top: var(--space-8); display: flex; align-items: center; justify-content: center; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); background: var(--color-surface-2); padding: var(--space-3); border-radius: var(--radius-full); width: fit-content; margin-inline: auto;}
-    .toggle-wrap input{width: 1.2rem; height: 1.2rem; accent-color: var(--color-primary); cursor: pointer;}
-    
-    .result-view{text-align: center; padding: var(--space-8) 0;}
-    .score-circle{width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-6); color: white; font-size: var(--text-2xl); font-family: var(--font-display); box-shadow: var(--shadow-lg);}
+    h1,h2,h3{font-family:var(--font-display);line-height:1.05;letter-spacing:-0.02em}
+    h1{font-size:var(--text-2xl);max-width:10ch}
+    .hero-copy p{margin-top:var(--space-4);max-width:56ch;color:var(--color-text-muted)}
+    .hero-card{background:linear-gradient(180deg,var(--color-surface),var(--color-surface-2));border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+    .hero-card:before{content:"";position:absolute;inset:auto -10% -20% auto;width:12rem;height:12rem;border-radius:50%;background:var(--color-accent-soft)}
+    .hero-card h2{font-size:var(--text-xl);margin-bottom:var(--space-2);position:relative}
+    .hero-card p{position:relative;color:var(--color-text-muted);margin-bottom:var(--space-5)}
+    .jump-list{list-style:none;display:grid;gap:var(--space-3);position:relative}
+    .jump-list a{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-4);background:color-mix(in srgb, var(--color-surface) 78%, transparent);border:1px solid var(--color-border);border-radius:var(--radius-lg);transition:all var(--transition)}
+    .jump-list a:hover,.jump-list a:focus-visible{transform:translateY(-1px);background:var(--color-surface);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--color-primary) 28%, var(--color-border))}
+    .jump-list small{color:var(--color-text-faint);display:block}
+    .arrow{font-size:var(--text-lg);color:var(--color-accent)}
+    .section{padding:var(--space-12) 0}
+    .section-head{margin-bottom:var(--space-8)}
+    .section-head p{color:var(--color-text-muted);max-width:62ch;margin-top:var(--space-3)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6)}
+    .card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-sm);content-visibility:auto}
+    .card h3{font-size:var(--text-xl);margin-bottom:var(--space-3)}
+    .tag{display:inline-flex;padding:0.35rem 0.7rem;border-radius:var(--radius-full);font-size:var(--text-xs);letter-spacing:0.06em;text-transform:uppercase;font-weight:700;margin-bottom:var(--space-4);background:var(--color-accent-soft);color:var(--color-accent)}
+    .phrase-list{display:grid;gap:var(--space-4);margin-top:var(--space-5)}
+    .phrase{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding-bottom:var(--space-4);border-bottom:1px dashed var(--color-border)}
+    .phrase:last-child{border-bottom:none;padding-bottom:0}
+    .es{font-weight:700;font-size:var(--text-lg)}
+    .de{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:0.25rem}
+    .copy-btn,.ghost-btn{padding:0.65rem 0.85rem;border-radius:var(--radius-full);background:var(--color-surface-2);border:1px solid var(--color-border);font-size:var(--text-xs);white-space:nowrap;transition:all var(--transition)}
+    .copy-btn:hover,.copy-btn:focus-visible,.ghost-btn:hover,.ghost-btn:focus-visible{background:var(--color-primary-soft);color:var(--color-primary)}
+    .learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
+    .flashcard-wrap{display:grid;gap:var(--space-4)}
+    .flashcard{min-height:18rem;background:linear-gradient(180deg,var(--color-surface),var(--color-surface-3));border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-md);display:flex;flex-direction:column;justify-content:space-between}
+    .flashcard-top{display:flex;justify-content:space-between;gap:var(--space-4);align-items:start}
+    .flashcard-label{font-size:var(--text-xs);letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-faint)}
+    .flashcard-word{font-family:var(--font-display);font-size:var(--text-2xl);line-height:1.05;margin-top:var(--space-4)}
+    .flashcard-answer{margin-top:var(--space-4);font-size:var(--text-lg);color:var(--color-text-muted)}
+    .flashcard-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;margin-top:var(--space-6)}
+    .btn-primary{padding:0.9rem 1.15rem;border-radius:var(--radius-full);background:var(--color-primary);color:var(--color-text-inverse);font-weight:700;box-shadow:var(--shadow-md);transition:all var(--transition)}
+    .btn-primary:hover,.btn-primary:focus-visible{background:var(--color-primary-hover);transform:translateY(-1px)}
+    .quiz-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-sm)}
+    .quiz-options{display:grid;gap:var(--space-3);margin-top:var(--space-5)}
+    .quiz-option{padding:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface-2);text-align:left;transition:all var(--transition)}
+    .quiz-option:hover,.quiz-option:focus-visible{border-color:color-mix(in srgb,var(--color-primary) 35%, var(--color-border));background:var(--color-surface)}
+    .quiz-option.correct{background:rgba(76, 150, 92, 0.12);border-color:rgba(76, 150, 92, 0.32)}
+    .quiz-option.wrong{background:rgba(191, 82, 82, 0.12);border-color:rgba(191, 82, 82, 0.3)}
+    .quiz-feedback{margin-top:var(--space-4);min-height:1.8rem;color:var(--color-text-muted)}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
+    .callout{padding:var(--space-8);border-radius:var(--radius-xl);background:linear-gradient(135deg,var(--color-primary),color-mix(in srgb,var(--color-primary) 75%, var(--color-accent)));color:var(--color-text-inverse);box-shadow:var(--shadow-lg)}
+    .callout p{opacity:0.92;margin-top:var(--space-3)}
+    .mini-dialog{margin-top:var(--space-5);display:grid;gap:var(--space-4)}
+    .line{padding:var(--space-4) var(--space-5);border-radius:var(--radius-lg);background:rgba(255,255,255,0.14);backdrop-filter:blur(6px)}
+    .practice-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-sm)}
+    .practice-list{display:grid;gap:var(--space-4);margin-top:var(--space-5)}
+    .practice-item{padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-surface-2);border:1px solid var(--color-border)}
+    .toast{position:fixed;right:1rem;bottom:1rem;padding:0.9rem 1rem;border-radius:var(--radius-lg);background:var(--color-text);color:var(--color-text-inverse);box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);pointer-events:none;transition:all var(--transition)}
+    .toast.show{opacity:1;transform:translateY(0)}
+    @media (max-width: 980px){.hero,.grid,.split,.learning-grid{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}}
+    @media (max-width: 560px){main{padding-top:var(--space-4)}.hero{padding-top:var(--space-8)}.card,.hero-card,.callout,.practice-card,.quiz-card,.flashcard{padding:var(--space-5)}.phrase{flex-direction:column;align-items:flex-start}.copy-btn{width:100%}.jump-list a{padding:var(--space-3)}.flashcard{min-height:15rem}}
+    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.toast,.nav-links a,.theme-toggle,.copy-btn,.ghost-btn,.quiz-option,.jump-list a,.btn-primary{transition:none}}
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#content">Zum Inhalt springen</a>
   <header>
-    <div class="container nav" style="max-width: 1200px;">
-      <div class="brand">
-        <div class="brand-mark">
+    <div class="container nav">
+      <div class="brand" aria-label="Frases útiles Logo">
+        <div class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 7.5h12M6 12h8M6 16.5h10"/><path d="M18.5 5.5 21 8l-2.5 2.5"/>
+            <path d="M6 7.5h12M6 12h8M6 16.5h10"/>
+            <path d="M18.5 5.5 21 8l-2.5 2.5"/>
           </svg>
         </div>
         <div>
@@ -128,389 +154,275 @@
           <div style="font-size:var(--text-sm);color:var(--color-text-faint)">A_tope.com · Unidad 1</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">← Zurück zur Übersicht</a>
+      <div class="nav-links" aria-label="Seitenabschnitte">
+        <a href="#saludar">Saludar</a>
+        <a href="#presentarse">Presentarse</a>
+        <a href="#lernen">Lernen</a>
+        <a href="#dialogos">Diálogos</a>
+        <a href="quiz.html" style="color: var(--color-primary); font-weight: bold;">Zum Quiz →</a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Farbschema wechseln">◐</button>
       </div>
     </div>
   </header>
 
-  <main>
-    <div class="container">
+  <main id="content">
+    <section class="container hero">
       <div class="hero-copy">
-        <span class="eyebrow">¡A jugar!</span>
-        <h1>Das große Unidad 1 Quiz</h1>
-        <p>Wähle einen Spielmodus und teste dein Wissen. Die Fragen werden in jeder Runde neu aus über 100 Vokabeln gemischt!</p>
+        <span class="eyebrow">Unidad 1</span>
+        <h1>Frases útiles para empezar.</h1>
+        <p>Wichtige Redemittel zum Begrüßen, Sich-Vorstellen, Fragenstellen und Reagieren — übersichtlich gesammelt und direkt zum Üben gedacht.</p>
       </div>
+      <aside class="hero-card" aria-label="Kurzübersicht">
+        <h2>Direkt starten</h2>
+        <p>Wähle einen Bereich und springe direkt dorthin.</p>
+        <ul class="jump-list">
+          <li><a href="#saludar"><span><strong>Saludar</strong><small>Begrüßungen</small></span><span class="arrow">→</span></a></li>
+          <li><a href="#presentarse"><span><strong>Presentarse</strong><small>Sich vorstellen</small></span><span class="arrow">→</span></a></li>
+          <li><a href="#preguntar"><span><strong>Preguntar</strong><small>Fragen stellen</small></span><span class="arrow">→</span></a></li>
+          <li><a href="#reaccionar"><span><strong>Reaccionar</strong><small>Antworten und reagieren</small></span><span class="arrow">→</span></a></li>
+        </ul>
+      </aside>
+    </section>
 
-      <div class="quiz-card" id="quizContainer">
+    <section class="container section" id="sammlung">
+      <div class="section-head">
+        <span class="tag">Frases útiles</span>
+        <p>Eine Auswahl zentraler Wendungen für Unidad 1, großzügig sortiert nach Kommunikationssituationen.</p>
+      </div>
+      <div class="grid">
+        <article class="card" id="saludar">
+          <span class="tag">Saludar</span>
+          <h3>Begrüßen</h3>
+          <div class="phrase-list">
+            <div class="phrase"><div><div class="es">Hola.</div><div class="de">Hallo.</div></div><button class="copy-btn" data-copy="Hola.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Buenos días.</div><div class="de">Guten Morgen.</div></div><button class="copy-btn" data-copy="Buenos días.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Buenas tardes.</div><div class="de">Guten Tag / Guten Nachmittag.</div></div><button class="copy-btn" data-copy="Buenas tardes.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">¿Qué tal?</div><div class="de">Wie geht's?</div></div><button class="copy-btn" data-copy="¿Qué tal?">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">¿Cómo estás?</div><div class="de">Wie geht es dir?</div></div><button class="copy-btn" data-copy="¿Cómo estás?">Kopieren</button></div>
+          </div>
+        </article>
+
+        <article class="card" id="presentarse">
+          <span class="tag">Presentarse</span>
+          <h3>Sich vorstellen</h3>
+          <div class="phrase-list">
+            <div class="phrase"><div><div class="es">Me llamo ...</div><div class="de">Ich heiße ...</div></div><button class="copy-btn" data-copy="Me llamo ...">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Soy ...</div><div class="de">Ich bin ...</div></div><button class="copy-btn" data-copy="Soy ...">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Tengo ... años.</div><div class="de">Ich bin ... Jahre alt.</div></div><button class="copy-btn" data-copy="Tengo ... años.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Soy de ...</div><div class="de">Ich komme aus ...</div></div><button class="copy-btn" data-copy="Soy de ...">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Vivo en ...</div><div class="de">Ich wohne in ...</div></div><button class="copy-btn" data-copy="Vivo en ...">Kopieren</button></div>
+          </div>
+        </article>
+
+        <article class="card" id="preguntar">
+          <span class="tag">Preguntar</span>
+          <h3>Fragen stellen</h3>
+          <div class="phrase-list">
+            <div class="phrase"><div><div class="es">¿Cómo te llamas?</div><div class="de">Wie heißt du?</div></div><button class="copy-btn" data-copy="¿Cómo te llamas?">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">¿De dónde eres?</div><div class="de">Woher kommst du?</div></div><button class="copy-btn" data-copy="¿De dónde eres?">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">¿Dónde vives?</div><div class="de">Wo wohnst du?</div></div><button class="copy-btn" data-copy="¿Dónde vives?">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">¿Cuántos años tienes?</div><div class="de">Wie alt bist du?</div></div><button class="copy-btn" data-copy="¿Cuántos años tienes?">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">¿Qué idiomas hablas?</div><div class="de">Welche Sprachen sprichst du?</div></div><button class="copy-btn" data-copy="¿Qué idiomas hablas?">Kopieren</button></div>
+          </div>
+        </article>
+
+        <article class="card" id="reaccionar">
+          <span class="tag">Reaccionar</span>
+          <h3>Reagieren</h3>
+          <div class="phrase-list">
+            <div class="phrase"><div><div class="es">Muy bien, gracias.</div><div class="de">Sehr gut, danke.</div></div><button class="copy-btn" data-copy="Muy bien, gracias.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Bien, ¿y tú?</div><div class="de">Gut, und dir?</div></div><button class="copy-btn" data-copy="Bien, ¿y tú?">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Mucho gusto.</div><div class="de">Freut mich.</div></div><button class="copy-btn" data-copy="Mucho gusto.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Encantado / Encantada.</div><div class="de">Freut mich sehr.</div></div><button class="copy-btn" data-copy="Encantado / Encantada.">Kopieren</button></div>
+            <div class="phrase"><div><div class="es">Igualmente.</div><div class="de">Ebenso.</div></div><button class="copy-btn" data-copy="Igualmente.">Kopieren</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section" id="lernen">
+      <div class="section-head">
+        <span class="tag">Aprender</span>
+        <h2>Lernen</h2>
+        <p>Hier kannst du aktiv üben: zuerst mit Karteikarten, danach mit einem kleinen Selbsttest.</p>
+      </div>
+      <div class="learning-grid">
+        <article class="flashcard-wrap">
+          <div class="flashcard" id="flashcard">
+            <div>
+              <div class="flashcard-top">
+                <div>
+                  <div class="flashcard-label">Karteikarte</div>
+                  <div class="flashcard-word" id="flashcardFront">Hola.</div>
+                </div>
+                <button class="ghost-btn" type="button" id="flipBtn">Antwort zeigen</button>
+              </div>
+              <div class="flashcard-answer" id="flashcardBack" hidden>Hallo.</div>
+            </div>
+            <div class="flashcard-actions">
+              <button class="btn-primary" type="button" id="nextCardBtn">Nächste Karte</button>
+              <button class="copy-btn" type="button" id="copyCardBtn">Frase kopieren</button>
+            </div>
+          </div>
+        </article>
+        <article class="quiz-card">
+          <span class="tag">Mini-quiz</span>
+          <h3>Was bedeutet diese frase?</h3>
+          <div class="es" id="quizQuestion">¿Cómo te llamas?</div>
+          <div class="quiz-options" id="quizOptions"></div>
+          <div class="quiz-feedback" id="quizFeedback"></div>
+          <div class="flashcard-actions">
+            <button class="ghost-btn" type="button" id="nextQuizBtn">Neue Frage</button>
+            <a href="quiz.html" class="btn-primary" style="text-decoration:none; text-align:center;">Zum großen Quiz</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section split" id="dialogos">
+      <article class="callout">
+        <span class="tag" style="background:rgba(255,255,255,0.18);color:var(--color-text-inverse)">Mini-diálogos</span>
+        <h2>Diálogos</h2>
+        <p>Kurze Beispiele für erste Gespräche.</p>
+        <div class="mini-dialog">
+          <div class="line"><strong>A:</strong> Hola, me llamo Laura. ¿Cómo te llamas?<br><strong>B:</strong> Hola, soy Daniel. Mucho gusto.</div>
+          <div class="line"><strong>A:</strong> ¿De dónde eres?<br><strong>B:</strong> Soy de Alemania. ¿Y tú?</div>
+          <div class="line"><strong>A:</strong> ¿Cómo estás?<br><strong>B:</strong> Muy bien, gracias. ¿Y tú?</div>
         </div>
-    </div>
+      </article>
+      <article class="practice-card">
+        <span class="tag">Práctica</span>
+        <h3>Zum Sprechen</h3>
+        <div class="practice-list">
+          <div class="practice-item">Preséntate en 4 Sätzen.</div>
+          <div class="practice-item">Stelle einer anderen Person 3 Fragen.</div>
+          <div class="practice-item">Antworte mit einer ganzen frase.</div>
+          <div class="practice-item">Sprich einen Mini-Dialog laut nach.</div>
+        </div>
+      </article>
+    </section>
   </main>
 
+  <div class="toast" id="toast" role="status" aria-live="polite">Kopiert.</div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // --- Dark Mode ---
+    (() => {
       const root = document.documentElement;
       const toggle = document.querySelector('[data-theme-toggle]');
-      if (toggle) {
-        let theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', theme);
+      const updateToggle = () => { toggle.textContent = theme === 'dark' ? '☀' : '◐'; };
+      updateToggle();
+      toggle?.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', theme);
-        const updateToggle = () => { toggle.textContent = theme === 'dark' ? '☀' : '◐'; };
         updateToggle();
-        toggle.addEventListener('click', () => {
-          theme = theme === 'dark' ? 'light' : 'dark';
-          root.setAttribute('data-theme', theme);
-          updateToggle();
-        });
-      }
+      });
 
-      // --- Vokabel-Datenbank ---
-      const vocabDB = [
-        { es: "el español", de: "Spanisch (Sprache)" },
-        { es: "¡Hola!", de: "Hallo!" },
-        { es: "me llamo", de: "ich heiße" },
-        { es: "soy de", de: "ich komme aus" },
-        { es: "soy", de: "ich bin" },
-        { es: "de", de: "aus, von" },
-        { es: "hablo", de: "ich spreche" },
-        { es: "y", de: "und" },
-        { es: "un poco (de)", de: "ein bisschen" },
-        { es: "el inglés", de: "Englisch (Sprache)" },
-        { es: "yo", de: "ich" },
-        { es: "también", de: "auch" },
-        { es: "el alemán", de: "Deutsch (Sprache)" },
-        { es: "¿Qué tal?", de: "Wie geht's?" },
-        { es: "el francés", de: "Französisch (Sprache)" },
-        { es: "la capital", de: "die Hauptstadt" },
-        { es: "tú", de: "du" },
-        { es: "¿Cómo te llamas?", de: "Wie heißt du?" },
-        { es: "¿cómo?", de: "wie?" },
-        { es: "¿De dónde eres?", de: "Woher kommst du?" },
-        { es: "¿de dónde?", de: "woher?" },
-        { es: "eres", de: "du bist" },
-        { es: "¿Qué lenguas hablas?", de: "Welche Sprachen sprichst du?" },
-        { es: "¿qué?", de: "was?, welche?" },
-        { es: "la lengua", de: "die Sprache" },
-        { es: "hablas", de: "du sprichst" },
-        { es: "el ejemplo", de: "das Beispiel" },
-        { es: "¡Vamos!", de: "Los geht's!" },
-        { es: "muy bien", de: "sehr gut" },
-        { es: "bien", de: "gut" },
-        { es: "¿Cómo estás?", de: "Wie geht's dir?" },
-        { es: "fenomenal", de: "großartig" },
-        { es: "gracias", de: "danke" },
-        { es: "él / ella", de: "er / sie" },
-        { es: "¿quién?", de: "wer?" },
-        { es: "es", de: "er / sie ist" },
-        { es: "¡Mira!", de: "Sieh mal!" },
-        { es: "un, una", de: "ein, eine" },
-        { es: "el amigo, la amiga", de: "der Freund, die Freundin" },
-        { es: "encantado, encantada", de: "sehr erfreut" },
-        { es: "mucho gusto", de: "angenehm (Begrüßung)" },
-        { es: "¡Hasta luego!", de: "Bis später!" },
-        { es: "¡Adiós!", de: "Auf Wiedersehen!" },
-        { es: "¡Buenos días!", de: "Guten Tag! / Guten Morgen!" },
-        { es: "¡Buenas tardes!", de: "Guten Tag! / Guten Abend!" },
-        { es: "¡Buenas noches!", de: "Guten Abend! / Gute Nacht!" },
-        { es: "más o menos", de: "mehr oder weniger, geht so" },
-        { es: "mal", de: "schlecht" },
-        { es: "fatal", de: "mies, furchtbar" },
-        { es: "el compañero de clase", de: "der Mitschüler" },
-        { es: "la clase", de: "die Klasse, der Unterricht" },
-        { es: "el trabajo", de: "die Arbeit" },
-        { es: "estudiar", de: "lernen, studieren" },
-        { es: "o", de: "oder" },
-        { es: "trabajar", de: "arbeiten" },
-        { es: "charlar", de: "quatschen, sich unterhalten" },
-        { es: "en", de: "in, an, auf" },
-        { es: "la plaza", de: "der Platz" },
-        { es: "no", de: "nein, nicht" },
-        { es: "aquí", de: "hier" },
-        { es: "pero", de: "aber" },
-        { es: "ahora", de: "jetzt" },
-        { es: "mi, mis", de: "mein, meine" },
-        { es: "la madre", de: "die Mutter" },
-        { es: "ser", de: "sein" },
-        { es: "¿verdad?", de: "stimmt's?, nicht wahr?" },
-        { es: "sí", de: "ja" },
-        { es: "el instituto", de: "die weiterführende Schule" },
-        { es: "todavía no", de: "noch nicht" },
-        { es: "todavía", de: "noch (immer)" },
-        { es: "¡Oye!", de: "Hör mal!" },
-        { es: "hablar", de: "sprechen" },
-        { es: "preparar algo", de: "etw. vorbereiten" },
-        { es: "el examen", de: "die Prüfung, der Test" },
-        { es: "significar algo", de: "etw. bedeuten" },
-        { es: "la biblioteca", de: "die Bibliothek" },
-        { es: "la pregunta", de: "die Frage" },
-        { es: "¿cuándo?", de: "wann?" },
-        { es: "mañana", de: "morgen" },
-        { es: "comprender algo", de: "etw. verstehen" },
-        { es: "el texto", de: "der Text" },
-        { es: "leer algo", de: "etw. lesen" },
-        { es: "mucho", de: "viel, sehr" },
-        { es: "así", de: "so" },
-        { es: "pues", de: "naja, also" },
-        { es: "claro", de: "(na) klar, natürlich" },
-        { es: "el padre", de: "der Vater" },
-        { es: "por eso", de: "deshalb" },
-        { es: "en casa", de: "zu Hause" },
-        { es: "la casa", de: "das Haus" },
-        { es: "genial", de: "genial" },
-        { es: "difícil", de: "schwierig" },
-        { es: "quedar", de: "sich verabreden, sich treffen" },
-        { es: "practicar algo", de: "etw. üben" },
-        { es: "vale", de: "okay, in Ordnung" },
-        { es: "la universidad", de: "die Universität" },
-        { es: "el hotel", de: "das Hotel" },
-        { es: "el restaurante", de: "das Restaurant" },
-        { es: "el supermercado", de: "der Supermarkt" },
-        { es: "la discoteca", de: "die Diskothek" },
-        { es: "tu, tus", de: "dein, deine" },
-        { es: "aprender algo", de: "etw. lernen" },
-        { es: "¿por qué?", de: "warum?" },
-        { es: "juntos, juntas", de: "zusammen" },
-        { es: "recibir algo", de: "etw. bekommen, erhalten" },
-        { es: "el mensaje", de: "die Nachricht" },
-        { es: "¡Buena idea!", de: "Gute Idee!" },
-        { es: "entonces", de: "dann, also" },
-        { es: "escribir algo", de: "etw. schreiben" },
-        { es: "el móvil", de: "das Handy" },
-        { es: "el momento", de: "der Moment" },
-        { es: "solo", de: "nur" },
-        { es: "vivir", de: "leben, wohnen" },
-        { es: "cerca", de: "nah, in der Nähe" },
-        { es: "primero", de: "zuerst" },
-        { es: "después", de: "danach, später" },
-        { es: "de acuerdo", de: "einverstanden" },
-        { es: "el vocabulario", de: "der Wortschatz" },
-        { es: "la película", de: "der Film" },
-        { es: "el regalo", de: "das Geschenk" },
-        { es: "bailar", de: "tanzen" },
-        { es: "comer algo", de: "etw. essen" },
-        { es: "descansar", de: "sich entspannen, ausruhen" },
-        { es: "comprar algo", de: "etw. kaufen" },
-        { es: "tomar algo", de: "etw. nehmen, trinken" },
-        { es: "el diálogo", de: "der Dialog" },
-        { es: "¿cuál?, ¿cuáles?", de: "welche?, welcher?, welches?" },
-        { es: "el número de teléfono", de: "die Telefonnummer" },
-        { es: "subir algo", de: "etw. hochgehen, hochladen" },
-        { es: "la escalera", de: "die Treppe" },
-        { es: "el vecino, la vecina", de: "der Nachbar, die Nachbarin" },
-        { es: "nuevo, nueva", de: "neu" },
-        { es: "en serio", de: "wirklich, im Ernst" },
-        { es: "necesitar algo", de: "etw. brauchen" },
-        { es: "la ayuda", de: "die Hilfe" },
-        { es: "con", de: "mit" },
-        { es: "el ordenador", de: "der Computer" },
-        { es: "funcionar", de: "funktionieren" },
-        { es: "¿Cómo se escribe...?", de: "Wie schreibt man ...?" },
-        { es: "perfecto", de: "perfekt" },
-        { es: "¡Hasta mañana!", de: "Bis morgen!" },
-        { es: "nosotros, nosotras", de: "wir" },
-        { es: "algo", de: "etwas" },
-        { es: "la puerta", de: "die Tür" },
-        { es: "el nombre", de: "der Vorname" }
-      ];
+      const toast = document.getElementById('toast');
+      let toastTimer;
+      const showToast = (text) => {
+        toast.textContent = text;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+      };
 
-      // --- State Variablen ---
-      let currentMode = '';
-      let activeQuestions = [];
-      let mistakes = []; // Speichert falsche Antworten
-      let currentIndex = 0;
-      let score = 0;
-      let autoAdvanceEnabled = true;
-      let advanceTimer = null;
-      const questionsPerRound = 10;
-      const container = document.getElementById('quizContainer');
-
-      if (!container) return;
-
-      // --- View 1: Setup / Startbildschirm ---
-      function renderSetup() {
-        container.innerHTML = `
-          <div class="setup-view">
-            <h2>Wähle deinen Spielmodus</h2>
-            <div class="setup-grid">
-              <button id="btnStartClassic" class="mode-btn">
-                <span>Klassisch</span>
-                <small>Wähle die richtige Übersetzung (Multiple Choice)</small>
-              </button>
-              <button id="btnStartTF" class="mode-btn">
-                <span>Verdadero o Falso</span>
-                <small>Passen Satz und Übersetzung zusammen?</small>
-              </button>
-            </div>
-            <label class="toggle-wrap">
-              <input type="checkbox" id="autoAdvanceToggle" checked>
-              Nach Antwort automatisch weiter
-            </label>
-          </div>
-        `;
-        
-        // Event Listener direkt anhängen
-        document.getElementById('btnStartClassic').addEventListener('click', () => startQuiz('classic'));
-        document.getElementById('btnStartTF').addEventListener('click', () => startQuiz('tf'));
-      }
-
-      // --- Quiz Generator & Start ---
-      function startQuiz(mode) {
-        currentMode = mode;
-        autoAdvanceEnabled = document.getElementById('autoAdvanceToggle') ? document.getElementById('autoAdvanceToggle').checked : true;
-        currentIndex = 0;
-        score = 0;
-        mistakes = []; // Fehler-Speicher für neue Runde leeren
-        
-        const shuffledVocab = [...vocabDB].sort(() => 0.5 - Math.random());
-        const roundVocab = shuffledVocab.slice(0, questionsPerRound);
-        
-        activeQuestions = roundVocab.map(item => {
-          if (mode === 'classic') {
-            const wrongOptions = vocabDB.filter(v => v.de !== item.de).sort(() => 0.5 - Math.random()).slice(0, 2);
-            const options = [item.de, wrongOptions[0].de, wrongOptions[1].de].sort(() => 0.5 - Math.random());
-            return { q: item.es, correct: item.de, options: options, type: 'classic', originalData: item };
-          } else {
-            const isTrue = Math.random() > 0.5;
-            let displayDe = item.de;
-            if (!isTrue) {
-               const wrongVocab = vocabDB.filter(v => v.de !== item.de).sort(() => 0.5 - Math.random())[0];
-               displayDe = wrongVocab.de;
-            }
-            return { q: item.es, statementDe: displayDe, correct: isTrue ? 'Verdadero (Wahr)' : 'Falso (Falsch)', options: ['Verdadero (Wahr)', 'Falso (Falsch)'], type: 'tf', originalData: item };
+      document.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-copy');
+          try {
+            await navigator.clipboard.writeText(text);
+            showToast('Text kopiert.');
+          } catch {
+            showToast('Kopieren nicht möglich.');
           }
         });
+      });
 
-        renderQuestion();
-      }
-
-      // --- Start einer Wiederholungsrunde ---
-      function startMistakesQuiz() {
-        activeQuestions = [...mistakes]; // Nur die Fehler nehmen
-        mistakes = []; // Speicher leeren (falls man sie WIEDER falsch macht)
-        currentIndex = 0;
-        score = 0;
-        renderQuestion();
-      }
-
-      // --- View 2: Die aktive Frage ---
-      function renderQuestion() {
-        clearTimeout(advanceTimer); 
-        const item = activeQuestions[currentIndex];
-        
-        let questionHTML = `<div class="quiz-question-text">${item.q}</div>`;
-        let gridClass = "quiz-options";
-
-        if (item.type === 'tf') {
-          questionHTML += `<div class="tf-statement">Bedeutet: <strong>„${item.statementDe}“</strong></div>`;
-          gridClass = "quiz-options tf-options";
+      const flashcards = [
+        { es: 'Hola.', de: 'Hallo.' },
+        { es: 'Buenos días.', de: 'Guten Morgen.' },
+        { es: 'Me llamo ...', de: 'Ich heiße ...' },
+        { es: '¿Cómo te llamas?', de: 'Wie heißt du?' },
+        { es: '¿De dónde eres?', de: 'Woher kommst du?' },
+        { es: 'Mucho gusto.', de: 'Freut mich.' }
+      ];
+      let flashIndex = 0;
+      let flashShown = false;
+      const flashFront = document.getElementById('flashcardFront');
+      const flashBack = document.getElementById('flashcardBack');
+      const flipBtn = document.getElementById('flipBtn');
+      const nextCardBtn = document.getElementById('nextCardBtn');
+      const copyCardBtn = document.getElementById('copyCardBtn');
+      const renderFlashcard = () => {
+        const card = flashcards[flashIndex];
+        flashFront.textContent = card.es;
+        flashBack.textContent = card.de;
+        flashBack.hidden = !flashShown;
+        flipBtn.textContent = flashShown ? 'Antwort ausblenden' : 'Antwort zeigen';
+      };
+      flipBtn.addEventListener('click', () => {
+        flashShown = !flashShown;
+        renderFlashcard();
+      });
+      nextCardBtn.addEventListener('click', () => {
+        flashIndex = (flashIndex + 1) % flashcards.length;
+        flashShown = false;
+        renderFlashcard();
+      });
+      copyCardBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(flashcards[flashIndex].es);
+          showToast('Frase kopiert.');
+        } catch {
+          showToast('Kopieren nicht möglich.');
         }
+      });
+      renderFlashcard();
 
-        container.innerHTML = `
-          <div class="quiz-header">
-            <span class="eyebrow" style="margin:0; background: var(--color-surface-3); color: var(--color-text)">Frage ${currentIndex + 1} von ${activeQuestions.length}</span>
-            <span class="quiz-progress">Punkte: ${score}</span>
-          </div>
-          ${questionHTML}
-          <div class="${gridClass}" id="optionsContainer"></div>
-          <div class="quiz-footer">
-            <div id="feedbackText" class="quiz-feedback"></div>
-            <button id="nextBtn" class="btn-primary" style="display:none;">Nächste Frage</button>
-          </div>
-        `;
-
-        const optionsContainer = document.getElementById('optionsContainer');
-        const nextBtn = document.getElementById('nextBtn');
-        const feedbackText = document.getElementById('feedbackText');
-
+      const quizData = [
+        { q: '¿Cómo te llamas?', correct: 'Wie heißt du?', options: ['Wie heißt du?', 'Wo wohnst du?', 'Wie alt bist du?'] },
+        { q: 'Soy de Alemania.', correct: 'Ich komme aus Deutschland.', options: ['Ich wohne in Deutschland.', 'Ich spreche Deutsch.', 'Ich komme aus Deutschland.'] },
+        { q: 'Mucho gusto.', correct: 'Freut mich.', options: ['Bis später.', 'Danke schön.', 'Freut mich.'] },
+        { q: '¿Qué tal?', correct: 'Wie geht\'s?', options: ['Wie heißt du?', 'Wie geht\'s?', 'Woher kommst du?'] }
+      ];
+      let quizIndex = 0;
+      const quizQuestion = document.getElementById('quizQuestion');
+      const quizOptions = document.getElementById('quizOptions');
+      const quizFeedback = document.getElementById('quizFeedback');
+      const nextQuizBtn = document.getElementById('nextQuizBtn');
+      const renderQuiz = () => {
+        const item = quizData[quizIndex];
+        quizQuestion.textContent = item.q;
+        quizOptions.innerHTML = '';
+        quizFeedback.textContent = '';
         item.options.forEach(option => {
           const btn = document.createElement('button');
+          btn.type = 'button';
           btn.className = 'quiz-option';
           btn.textContent = option;
-          
           btn.addEventListener('click', () => {
-            const allBtns = optionsContainer.querySelectorAll('.quiz-option');
-            allBtns.forEach(b => b.disabled = true);
-            nextBtn.style.display = 'block';
-
+            const all = quizOptions.querySelectorAll('.quiz-option');
+            all.forEach(el => el.disabled = true);
             if (option === item.correct) {
               btn.classList.add('correct');
-              feedbackText.textContent = '¡Correcto!';
-              feedbackText.className = 'quiz-feedback feedback-correct';
-              score++;
-              document.querySelector('.quiz-progress').textContent = `Punkte: ${score}`;
+              quizFeedback.textContent = 'Richtig.';
             } else {
               btn.classList.add('wrong');
-              feedbackText.textContent = '¡Falso!';
-              feedbackText.className = 'quiz-feedback feedback-wrong';
-              
-              // Falsche Antwort in die Fehler-Liste eintragen
-              mistakes.push(item);
-
-              allBtns.forEach(b => {
-                if(b.textContent === item.correct) b.classList.add('correct');
-              });
-            }
-
-            if (autoAdvanceEnabled) {
-              advanceTimer = setTimeout(goToNext, 1600);
+              all.forEach(el => { if (el.textContent === item.correct) el.classList.add('correct'); });
+              quizFeedback.textContent = 'Noch nicht — die richtige Antwort ist markiert.';
             }
           });
-          optionsContainer.appendChild(btn);
+          quizOptions.appendChild(btn);
         });
-
-        nextBtn.addEventListener('click', () => {
-          clearTimeout(advanceTimer);
-          goToNext();
-        });
-      }
-
-      function goToNext() {
-        currentIndex++;
-        if (currentIndex < activeQuestions.length) {
-          renderQuestion();
-        } else {
-          showResults();
-        }
-      }
-
-      // --- View 3: Ergebnis ---
-      function showResults() {
-        let message = "";
-        if(score === activeQuestions.length) message = "¡Excelente! Perfekt, alles richtig!";
-        else if(score >= activeQuestions.length * 0.7) message = "¡Muy bien! Das sieht schon sehr gut aus.";
-        else message = "¡Sigue practicando! Übung macht den Meister.";
-
-        let retryBtnHTML = '';
-        if (mistakes.length > 0) {
-            retryBtnHTML = `<button id="btnRetry" class="btn-primary" style="background: var(--color-accent); border-color: var(--color-accent);">Fehler wiederholen (${mistakes.length})</button>`;
-        }
-
-        container.innerHTML = `
-          <div class="result-view">
-            <h2>Runde beendet!</h2>
-            <div class="score-circle">${score} / ${activeQuestions.length}</div>
-            <p style="margin-bottom: var(--space-6); color: var(--color-text-muted);">${message}</p>
-            <div style="display:flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
-              <button id="btnRestart" class="btn-primary">Neue Runde spielen</button>
-              ${retryBtnHTML}
-              <button id="btnSetup" class="btn-primary" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);">Modus wechseln</button>
-            </div>
-          </div>
-        `;
-
-        // Event Listener direkt nach dem Einfügen anhängen
-        document.getElementById('btnRestart').addEventListener('click', () => startQuiz(currentMode));
-        document.getElementById('btnSetup').addEventListener('click', renderSetup);
-        
-        if (mistakes.length > 0) {
-            document.getElementById('btnRetry').addEventListener('click', startMistakesQuiz);
-        }
-      }
-
-      // Starte App
-      renderSetup();
-    });
+      };
+      nextQuizBtn.addEventListener('click', () => {
+        quizIndex = (quizIndex + 1) % quizData.length;
+        renderQuiz();
+      });
+      renderQuiz();
+    })();
   </script>
 </body>
 </html>
