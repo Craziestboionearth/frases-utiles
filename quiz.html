@@ -165,7 +165,7 @@
         });
       }
 
-      // --- Vokabel-Datenbank aus dem Schulbuch (Unidad 1) ---
+      // --- Vokabel-Datenbank ---
       const vocabDB = [
         { es: "el español", de: "Spanisch (Sprache)" },
         { es: "¡Hola!", de: "Hallo!" },
@@ -317,6 +317,7 @@
       // --- State Variablen ---
       let currentMode = '';
       let activeQuestions = [];
+      let mistakes = []; // Speichert falsche Antworten
       let currentIndex = 0;
       let score = 0;
       let autoAdvanceEnabled = true;
@@ -332,11 +333,11 @@
           <div class="setup-view">
             <h2>Wähle deinen Spielmodus</h2>
             <div class="setup-grid">
-              <button class="mode-btn" onclick="startQuiz('classic')">
+              <button id="btnStartClassic" class="mode-btn">
                 <span>Klassisch</span>
                 <small>Wähle die richtige Übersetzung (Multiple Choice)</small>
               </button>
-              <button class="mode-btn" onclick="startQuiz('tf')">
+              <button id="btnStartTF" class="mode-btn">
                 <span>Verdadero o Falso</span>
                 <small>Passen Satz und Übersetzung zusammen?</small>
               </button>
@@ -347,54 +348,54 @@
             </label>
           </div>
         `;
+        
+        // Event Listener direkt anhängen
+        document.getElementById('btnStartClassic').addEventListener('click', () => startQuiz('classic'));
+        document.getElementById('btnStartTF').addEventListener('click', () => startQuiz('tf'));
       }
 
       // --- Quiz Generator & Start ---
-      window.startQuiz = function(mode) {
+      function startQuiz(mode) {
         currentMode = mode;
-        autoAdvanceEnabled = document.getElementById('autoAdvanceToggle').checked;
+        autoAdvanceEnabled = document.getElementById('autoAdvanceToggle') ? document.getElementById('autoAdvanceToggle').checked : true;
         currentIndex = 0;
         score = 0;
+        mistakes = []; // Fehler-Speicher für neue Runde leeren
         
-        // Zufällige Vokabeln für diese Runde ziehen
         const shuffledVocab = [...vocabDB].sort(() => 0.5 - Math.random());
         const roundVocab = shuffledVocab.slice(0, questionsPerRound);
         
         activeQuestions = roundVocab.map(item => {
           if (mode === 'classic') {
-            // Falsche Antworten aus dem Rest der DB suchen
             const wrongOptions = vocabDB.filter(v => v.de !== item.de).sort(() => 0.5 - Math.random()).slice(0, 2);
             const options = [item.de, wrongOptions[0].de, wrongOptions[1].de].sort(() => 0.5 - Math.random());
-            return {
-              q: item.es,
-              correct: item.de,
-              options: options,
-              type: 'classic'
-            };
+            return { q: item.es, correct: item.de, options: options, type: 'classic', originalData: item };
           } else {
-            // True/False Modus (50% Chance, dass es stimmt)
             const isTrue = Math.random() > 0.5;
             let displayDe = item.de;
             if (!isTrue) {
                const wrongVocab = vocabDB.filter(v => v.de !== item.de).sort(() => 0.5 - Math.random())[0];
                displayDe = wrongVocab.de;
             }
-            return {
-              q: item.es,
-              statementDe: displayDe,
-              correct: isTrue ? 'Verdadero (Wahr)' : 'Falso (Falsch)',
-              options: ['Verdadero (Wahr)', 'Falso (Falsch)'],
-              type: 'tf'
-            };
+            return { q: item.es, statementDe: displayDe, correct: isTrue ? 'Verdadero (Wahr)' : 'Falso (Falsch)', options: ['Verdadero (Wahr)', 'Falso (Falsch)'], type: 'tf', originalData: item };
           }
         });
 
         renderQuestion();
-      };
+      }
+
+      // --- Start einer Wiederholungsrunde ---
+      function startMistakesQuiz() {
+        activeQuestions = [...mistakes]; // Nur die Fehler nehmen
+        mistakes = []; // Speicher leeren (falls man sie WIEDER falsch macht)
+        currentIndex = 0;
+        score = 0;
+        renderQuestion();
+      }
 
       // --- View 2: Die aktive Frage ---
       function renderQuestion() {
-        clearTimeout(advanceTimer); // Verhindert doppeltes Skippen
+        clearTimeout(advanceTimer); 
         const item = activeQuestions[currentIndex];
         
         let questionHTML = `<div class="quiz-question-text">${item.q}</div>`;
@@ -442,15 +443,17 @@
               btn.classList.add('wrong');
               feedbackText.textContent = '¡Falso!';
               feedbackText.className = 'quiz-feedback feedback-wrong';
+              
+              // Falsche Antwort in die Fehler-Liste eintragen
+              mistakes.push(item);
+
               allBtns.forEach(b => {
                 if(b.textContent === item.correct) b.classList.add('correct');
               });
             }
 
             if (autoAdvanceEnabled) {
-              advanceTimer = setTimeout(() => {
-                goToNext();
-              }, 1600);
+              advanceTimer = setTimeout(goToNext, 1600);
             }
           });
           optionsContainer.appendChild(btn);
@@ -478,19 +481,34 @@
         else if(score >= activeQuestions.length * 0.7) message = "¡Muy bien! Das sieht schon sehr gut aus.";
         else message = "¡Sigue practicando! Übung macht den Meister.";
 
+        let retryBtnHTML = '';
+        if (mistakes.length > 0) {
+            retryBtnHTML = `<button id="btnRetry" class="btn-primary" style="background: var(--color-accent); border-color: var(--color-accent);">Fehler wiederholen (${mistakes.length})</button>`;
+        }
+
         container.innerHTML = `
           <div class="result-view">
             <h2>Runde beendet!</h2>
             <div class="score-circle">${score} / ${activeQuestions.length}</div>
             <p style="margin-bottom: var(--space-6); color: var(--color-text-muted);">${message}</p>
             <div style="display:flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
-              <button onclick="startQuiz(currentMode)" class="btn-primary">Nochmal spielen</button>
-              <button onclick="renderSetup()" class="btn-primary" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);">Modus wechseln</button>
+              <button id="btnRestart" class="btn-primary">Neue Runde spielen</button>
+              ${retryBtnHTML}
+              <button id="btnSetup" class="btn-primary" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);">Modus wechseln</button>
             </div>
           </div>
         `;
+
+        // Event Listener direkt nach dem Einfügen anhängen
+        document.getElementById('btnRestart').addEventListener('click', () => startQuiz(currentMode));
+        document.getElementById('btnSetup').addEventListener('click', renderSetup);
+        
+        if (mistakes.length > 0) {
+            document.getElementById('btnRetry').addEventListener('click', startMistakesQuiz);
+        }
       }
 
+      // Starte App
       renderSetup();
     });
   </script>
