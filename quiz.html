@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gran Quiz – A_tope.com Unidad 1</title>
-  <meta name="description" content="Teste dein Wissen: Spanische Redemittel Unidad 1." />
   <link rel="preconnect" href="https://api.fontshare.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=boska@400,500,700&display=swap" rel="stylesheet">
   <style>
-    /* Exakt dasselbe CSS wie in deiner Hauptseite */
     :root, [data-theme="light"] {
       --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
       --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
@@ -59,15 +57,12 @@
       --color-accent-soft: rgba(240, 162, 97, 0.12);
       --color-primary-soft: rgba(104, 184, 191, 0.12);
       --color-text-inverse: #1a1612;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.26);
-      --shadow-lg: 0 18px 45px rgba(0,0,0,0.35);
     }
     *,:before,:after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
     body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.7;background:var(--color-bg);color:var(--color-text);background-image:radial-gradient(circle at top left, var(--color-accent-soft), transparent 28%), radial-gradient(circle at 90% 20%, var(--color-primary-soft), transparent 22%)}
     a{text-decoration:none;color:inherit} button{font:inherit;border:none;background:none;cursor:pointer}
-    .container{width:min(calc(100% - 2rem), var(--content));margin-inline:auto; max-width: 800px;} /* Max-width für Quiz zentriert */
+    .container{width:min(calc(100% - 2rem), var(--content));margin-inline:auto; max-width: 800px;}
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb, var(--color-bg) 82%, transparent);border-bottom:1px solid var(--color-border)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) 0;gap:var(--space-4)}
     .brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700}
@@ -82,7 +77,6 @@
     h1{font-family:var(--font-display);line-height:1.05;letter-spacing:-0.02em; font-size:var(--text-2xl); margin-inline: auto;}
     .hero-copy p{margin-top:var(--space-4); max-width:56ch; margin-inline:auto; color:var(--color-text-muted)}
     
-    /* Quiz Specific Styles */
     .quiz-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-lg); margin-top: var(--space-6);}
     .quiz-header{display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); border-bottom: 1px dashed var(--color-border); padding-bottom: var(--space-4);}
     .quiz-progress{font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 700;}
@@ -141,9 +135,9 @@
     </div>
   </main>
 
-    <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Theme Toggle Logic (Dark Mode)
+      // 1. Dark Mode Toggle
       const root = document.documentElement;
       const toggle = document.querySelector('[data-theme-toggle]');
       
@@ -160,7 +154,7 @@
         });
       }
 
-      // 2. Quiz Logic
+      // 2. Quiz Logik
       const questions = [
         { q: '¿Cómo te llamas?', correct: 'Wie heißt du?', options: ['Wie heißt du?', 'Wo wohnst du?', 'Wie alt bist du?'] },
         { q: 'Guten Nachmittag.', correct: 'Buenas tardes.', options: ['Buenos días.', 'Buenas tardes.', 'Buenas noches.'] },
@@ -176,8 +170,7 @@
       let score = 0;
       const container = document.getElementById('quizContainer');
 
-      // Falls die Box im HTML fehlt, stoppt das Skript hier sicher
-      if (!container) return; 
+      if (!container) return; // Bricht ab, falls der Container fehlt
 
       function renderQuestion() {
         const item = questions[currentIndex];
@@ -199,7 +192,7 @@
         const nextBtn = document.getElementById('nextBtn');
         const feedbackText = document.getElementById('feedbackText');
 
-        // Antworten zufällig mischen
+        // Antworten mischen
         const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
 
         shuffledOptions.forEach(option => {
@@ -208,7 +201,6 @@
           btn.textContent = option;
           
           btn.addEventListener('click', () => {
-            // Nach Klick alle Buttons sperren
             const allBtns = optionsContainer.querySelectorAll('.quiz-option');
             allBtns.forEach(b => b.disabled = true);
             nextBtn.disabled = false;
@@ -223,7 +215,6 @@
               btn.classList.add('wrong');
               feedbackText.textContent = '¡Falso! Leider falsch.';
               feedbackText.className = 'quiz-feedback feedback-wrong';
-              // Richtige Antwort trotzdem grün markieren
               allBtns.forEach(b => {
                 if(b.textContent === item.correct) b.classList.add('correct');
               });
@@ -259,7 +250,8 @@
         `;
       }
 
-      // Quiz direkt beim Laden der Seite starten
       renderQuestion();
     });
   </script>
+</body>
+</html>
